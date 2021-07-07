@@ -19,7 +19,7 @@
 			</div>
 			
 			<div class="form-group row">
-				<select class="form-control mb-4 col-4 col-xs-4" th:field="${project.state}">
+				<select class="form-control mb-4 col-2 col-xs-4" th:field="${project.state}">
 				    <option th:value="NOTSTARTED">Not Started</option>
 				    <option th:value="INPROGRESS">In Progress</option>
 				    <option th:value="COMPLETED">Completed</option>
@@ -31,8 +31,15 @@
 				<textarea type="text" placeholder="Enter Project Description" th:field="${project.description}" 
 						class="mb-4 col-2 col-xs-4"></textarea>
 			</div>
+			
+			<select class="mb-4 col-2 col-xs-4" th:field="*{employees}" multiple="multiple">
+				<option th:each = "employee : ${allEmployees}"
+						th:value = "${employee.employeeId}"
+						th:text = "${employee.firstName}">
+				</option>
+			</select>
 
-			<button type="submit" class="btn btn-info col-2">Create Project</button>
+			<button type="submit" class="btn btn-info col-2" style="top:40px; left: -200px">Create Project</button>
 			
 		</form>
 	</div>

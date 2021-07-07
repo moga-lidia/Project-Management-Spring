@@ -1,35 +1,56 @@
 package com.jrp.pma.entities;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
 
 @Entity
 public class Employee {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long employeeId;
 	
 	private String firstName;
 	private String lastName;
 	private String email;
 	
-	@ManyToOne
-	@JoinColumn(name="project_id")
-	private Project theProject;
+	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH},
+			   fetch = FetchType.LAZY)
+	@JoinTable(name="project_employee",
+	joinColumns=@JoinColumn(name="employee_id"),
+	inverseJoinColumns= @JoinColumn(name="project_id")
+			)
+	private List<Project> projects;
 	
 	public Employee() {
+		
 	}
+	
 	public Employee(String firstName, String lastName, String email) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 	}
+
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}
+
 	public long getEmployeeId() {
 		return employeeId;
 	}
