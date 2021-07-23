@@ -15,8 +15,10 @@ import com.jrp.pma.entities.Employee;
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController {
+	
 	@Autowired
 	EmployeeRepository empRepo;
+
 	
 	@GetMapping
 	public String displayEmployees(Model model) {
